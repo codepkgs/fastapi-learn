@@ -11,9 +11,19 @@ class AppSettings(BaseSettings):
     debug: bool = False
 
 
+# Redis配置
+class RedisSettings(BaseSettings):
+    host: str = "localhost" 
+    port: int = 6379
+    password: str = ""
+    db: int = 0
+    max_connections: int = 30
+
+
 # 全局配置
 class Settings(BaseSettings):
     app: AppSettings = AppSettings()
+    redis: RedisSettings = RedisSettings()
 
     model_config = SettingsConfigDict(env_file=".env", env_nested_delimiter=".")
 
