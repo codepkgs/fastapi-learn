@@ -13,17 +13,23 @@ class AppSettings(BaseSettings):
 
 # Redis配置
 class RedisSettings(BaseSettings):
-    host: str = "localhost" 
+    host: str = "localhost"
     port: int = 6379
     password: str = ""
     db: int = 0
     max_connections: int = 30
 
 
+# 中间件配置
+class MiddlewareSettings(BaseSettings):
+    enable_request_id: bool = True
+
+
 # 全局配置
 class Settings(BaseSettings):
     app: AppSettings = AppSettings()
     redis: RedisSettings = RedisSettings()
+    middleware: MiddlewareSettings = MiddlewareSettings()
 
     model_config = SettingsConfigDict(env_file=".env", env_nested_delimiter=".")
 
