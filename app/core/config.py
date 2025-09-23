@@ -22,7 +22,7 @@ class RedisSettings(BaseSettings):
 
 # 中间件配置
 class MiddlewareSettings(BaseSettings):
-    enable_request_id: bool = True
+    enable_request_id: bool = False
 
 
 # 全局配置

@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+
 from app.core.config import get_settings
 from app.core.lifespan import app_lifespan
 from app.exceptions.handlers import register_all_api_exception_handlers
-from app.middlewares.request_id import request_id_middleware
+from app.middlewares.request_id import RequestIDMiddleware
 
 settings = get_settings()
 
@@ -19,7 +20,7 @@ app = FastAPI(
 register_all_api_exception_handlers(app)
 
 if settings.middleware.enable_request_id:
-    app.middleware("http")(request_id_middleware)
+    app.add_middleware(RequestIDMiddleware)
 
 
 class UserLoginRequest(BaseModel):
