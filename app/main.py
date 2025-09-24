@@ -1,13 +1,16 @@
 from fastapi import FastAPI
+from loguru import logger
 from pydantic import BaseModel
 
-from app.core.config import get_settings
+# settings = get_settings()
+from app.core import settings
+
+# from app.core.config import get_settings
 from app.core.lifespan import app_lifespan
+from app.core.middleware import (
+    RequestLoggingMiddleware,
+)
 from app.exceptions.handlers import register_all_api_exception_handlers
-from app.middlewares.request_id import RequestIDMiddleware
-
-settings = get_settings()
-
 
 app = FastAPI(
     title=settings.app.name,
@@ -19,8 +22,8 @@ app = FastAPI(
 
 register_all_api_exception_handlers(app)
 
-if settings.middleware.enable_request_id:
-    app.add_middleware(RequestIDMiddleware)
+# 添加中间件
+app.add_middleware(RequestLoggingMiddleware)
 
 
 class UserLoginRequest(BaseModel):
@@ -30,6 +33,7 @@ class UserLoginRequest(BaseModel):
 
 @app.post("/login")
 async def login(user: UserLoginRequest):
+    logger.info(f"User {user.username} is logging in")
     return {
         "username": user.username,
     }
