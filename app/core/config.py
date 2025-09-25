@@ -38,12 +38,30 @@ class LoggerSettings(BaseSettings):
     retention: int = 30  # 日志保留周期 30天
 
 
+# 数据库配置
+class DatabaseSettings(BaseSettings):
+    host: str = "localhost"
+    port: int = 3306
+    user: str = "root"
+    password: str = ""
+    database: str = "fastapi_db"
+    charset: str = "utf8mb4"
+    pool_size: int = 30
+    max_overflow: int = 20
+    pool_timeout: int = 30
+    pool_recycle: int = 3600
+    pool_pre_ping: bool = True
+    echo: bool = False
+
+
 # 全局配置
 class Settings(BaseSettings):
     app: AppSettings = AppSettings()
     redis: RedisSettings = RedisSettings()
     middleware: MiddlewareSettings = MiddlewareSettings()
     logger: LoggerSettings = LoggerSettings()
+    database: DatabaseSettings = DatabaseSettings()
+
     model_config = SettingsConfigDict(env_file=".env", env_nested_delimiter=".")
 
 

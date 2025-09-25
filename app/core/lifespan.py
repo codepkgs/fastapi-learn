@@ -2,7 +2,7 @@ from contextlib import AsyncExitStack, asynccontextmanager
 
 from fastapi import FastAPI
 
-from app.db.redis import close_redis_pool, get_redis_client
+from app.core.redis import close_redis_pool, get_redis_client
 
 
 @asynccontextmanager
