@@ -1,6 +1,5 @@
 from contextlib import contextmanager
 
-from fastapi import HTTPException
 from sqlalchemy import QueuePool, create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -9,7 +8,7 @@ from app.core.config import get_settings
 settings = get_settings()
 
 db_engine = create_engine(
-    f"mysql+pymysql://{settings.database.user}:{settings.database.password}@{settings.database.host}:{settings.database.port}/{settings.database.database}?charset={settings.database.charset}",
+    f"mysql+pymysql://{settings.database.user}:{settings.database.password}@{settings.database.host}:{settings.database.port}/{settings.database.dbname}?charset={settings.database.charset}",
     poolclass=QueuePool,
     max_overflow=settings.database.max_overflow,
     pool_size=settings.database.pool_size,

@@ -44,7 +44,7 @@ class DatabaseSettings(BaseSettings):
     port: int = 3306
     user: str = "root"
     password: str = ""
-    database: str = "fastapi_db"
+    dbname: str = "fastapi_db"
     charset: str = "utf8mb4"
     pool_size: int = 30
     max_overflow: int = 20
