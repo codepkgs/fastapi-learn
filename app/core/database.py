@@ -1,11 +1,16 @@
 from contextlib import contextmanager
 
 from sqlalchemy import QueuePool, create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm import declarative_base, scoped_session, sessionmaker
 
 from app.core.config import get_settings
 
+# 导入配置
 settings = get_settings()
+
+# Base元数据
+Base = declarative_base()
+
 
 db_engine = create_engine(
     f"mysql+pymysql://{settings.database.user}:{settings.database.password}@{settings.database.host}:{settings.database.port}/{settings.database.dbname}?charset={settings.database.charset}",
