@@ -13,6 +13,13 @@ class AppSettings(BaseSettings):
     debug: bool = False
 
 
+# 认证配置
+class OAuth2Settings(BaseSettings):
+    secret_key: str = "SECURITY_KEY"
+    algorithm: str = "HS256"
+    access_token_expire_minutes: int = 30
+
+
 # Redis配置
 class RedisSettings(BaseSettings):
     host: str = "localhost"
@@ -61,6 +68,7 @@ class Settings(BaseSettings):
     middleware: MiddlewareSettings = MiddlewareSettings()
     logger: LoggerSettings = LoggerSettings()
     database: DatabaseSettings = DatabaseSettings()
+    oauth2: OAuth2Settings = OAuth2Settings()
 
     model_config = SettingsConfigDict(env_file=".env", env_nested_delimiter=".")
 
