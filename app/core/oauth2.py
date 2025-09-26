@@ -1,13 +1,16 @@
 import datetime
 
 import jwt
-from fastapi import HTTPException, status
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
 
 from app.core.config import get_settings
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/token")
 settings = get_settings()
 
 
@@ -63,3 +66,8 @@ class OAuth2JWT:
                 detail=f"Could not validate credentials, {str(err)}",
                 headers={"WWW-Authenticate": "Bearer"},
             )
+
+
+class AuthTokenDependency:
+    def __call__(self, token: str = Depends(oauth2_scheme)):
+        return OAuth2JWT.get_current_user(token)
