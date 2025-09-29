@@ -19,3 +19,7 @@ logs/
 
 # Environment variables
 .env
+
+# alembic
+alembic.ini
+alembic/versions
